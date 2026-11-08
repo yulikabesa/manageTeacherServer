@@ -1,0 +1,200 @@
+{
+  "version": "2",
+  "dialect": "mssql",
+  "id": "dd1483d0-9fc0-4607-851c-b8a501fedb88",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "ddl": [
+    {
+      "schema": "dbo",
+      "name": "Users",
+      "entityType": "tables"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "user_id",
+      "type": "bigint",
+      "notNull": true,
+      "generated": null,
+      "identity": {
+        "seed": 1,
+        "increment": 1
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "username",
+      "type": "nvarchar(80)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "password_hash",
+      "type": "varchar(255)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "full_name",
+      "type": "nvarchar(150)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "personal_number",
+      "type": "varchar(7)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "email",
+      "type": "varchar(254)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "phone",
+      "type": "varchar(25)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "position_title",
+      "type": "nvarchar(120)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "rank",
+      "type": "nvarchar(50)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "service_type",
+      "type": "varchar(20)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "is_active",
+      "type": "bit",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "created_at_utc",
+      "type": "datetime2(0)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "updated_at_utc",
+      "type": "datetime2(0)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "Users_pkey",
+      "nameExplicit": false,
+      "columns": [
+        "user_id"
+      ],
+      "entityType": "pks"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "Users_username_key",
+      "nameExplicit": false,
+      "columns": [
+        "username"
+      ],
+      "entityType": "uniques"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "Users_personal_number_key",
+      "nameExplicit": false,
+      "columns": [
+        "personal_number"
+      ],
+      "entityType": "uniques"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "users_service_type_check",
+      "value": "[Users].[service_type] IN ('MANDATORY', 'Career')",
+      "entityType": "checks"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "users_phone_check",
+      "value": "[Users].[phone] NOT LIKE '%[^0-9]%'\n          AND LEN([Users].[phone]) = 10",
+      "entityType": "checks"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "users_email_check",
+      "value": "[Users].[email] LIKE '%_@_%._%'",
+      "entityType": "checks"
+    }
+  ],
+  "renames": []
+}
