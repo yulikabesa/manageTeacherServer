@@ -3,6 +3,10 @@ import { StatusCodes } from "http-status-codes";
 import { db } from "../db/db";
 import { users } from "../db/schemas/users";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { eq } from "drizzle-orm";
+
+const TOKEN_EXPIRES_IN = "1h";
 
 export class UserController {
   // POST create new user
@@ -32,7 +36,17 @@ export class UserController {
         success: true,
         message: "User created successfully",
       });
-    } catch (error) {
+    } catch (error: any) {
+      const message = error.cause?.message ?? error.message ?? "";
+
+      if (message.includes("Violation of UNIQUE")) {
+        res.status(StatusCodes.CONFLICT).json({
+          success: false,
+          message: "A user with these details already exists.",
+        });
+        return;
+      }
+
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         success: false,
         error: "Failed to create a user",
@@ -40,4 +54,80 @@ export class UserController {
       });
     }
   }
+
+  // POST login user, returns a JWT
+  static async loginUser(req: Request, res: Response): Promise<void> {
+    try {
+      const { username, password } = req.body ?? {};
+
+      if (
+        typeof username !== "string" ||
+        typeof password !== "string" ||
+        !username ||
+        !password
+      ) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+          success: false,
+          message: "Username and password are required.",
+        });
+        return;
+      }
+
+      const [user] = await db
+        .select()
+        .top(1)
+        .from(users)
+        .where(eq(users.username, username.trim()));
+
+      const passwordMatches = await bcrypt.compare(
+        password,
+        user?.password_hash ?? "",
+      );
+
+      // Same response for unknown username and wrong password
+      if (!user || !passwordMatches) {
+        res.status(StatusCodes.UNAUTHORIZED).json({
+          success: false,
+          message: "Invalid username or password.",
+        });
+        return;
+      }
+
+      if (!user.is_active) {
+        res.status(StatusCodes.FORBIDDEN).json({
+          success: false,
+          message: "This account is disabled.",
+        });
+        return;
+      }
+
+      const token = jwt.sign(
+        { userId: user.user_id, username: user.username },
+        process.env.JWT_SECRET!,
+        { expiresIn: TOKEN_EXPIRES_IN },
+      );
+
+      // safe user is the user without the password
+      const { password_hash, ...safeUser } = user;
+
+      res.status(StatusCodes.OK).json({
+        success: true,
+        message: "Logged in successfully",
+        token,
+        user: safeUser,
+      });
+    } catch (error) {
+      console.error("Login failed:", error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: "Failed to log in",
+      });
+    }
+  }
+
+  // POST refreshToken returns new token
+  static async refreshToken(req: Request, res: Response): Promise<void> {}
+
+  // POST logoutUser
+  static async logoutUser(req: Request, res: Response): Promise<void> {}
 }

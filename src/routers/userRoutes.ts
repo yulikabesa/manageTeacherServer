@@ -1,22 +1,27 @@
 import express from "express";
-// import { auth } from "../middleware/auth.ts";
+import { auth } from "../middleware/auth.ts";
 import { UserController } from "../controllers/userController";
 const router = express.Router();
 
 // sign up
 // POST create new user
 
-router.post("/", UserController.createUser);
+router.post("/register", UserController.createUser);
 
-// // login
-// // POST login user creates new token
+// login
+// POST login user creates new token
 
-// router.post("/login", UserController.loginUser);
+router.post("/login", UserController.loginUser);
 
-// // logout
-// // POST logout user
+// refresh token
+// POST refresh token
 
-// router.post("/logout", auth, UserController.logoutUser);
+router.post("/refresh", UserController.refreshToken);
+
+// logout
+// POST logout user
+
+router.post("/logout", auth, UserController.logoutUser);
 
 // // Get user
 
