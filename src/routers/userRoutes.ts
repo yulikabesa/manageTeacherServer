@@ -13,15 +13,11 @@ router.post("/register", UserController.createUser);
 
 router.post("/login", UserController.loginUser);
 
-// refresh token
-// POST refresh token
-
-router.post("/refresh", UserController.refreshToken);
 
 // logout
 // POST logout user
 
-router.post("/logout", auth, UserController.logoutUser);
+router.post("/logout", UserController.logoutUser);
 
 // // Get user
 

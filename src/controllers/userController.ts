@@ -6,7 +6,17 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { eq } from "drizzle-orm";
 
-const TOKEN_EXPIRES_IN = "1h";
+const TOKEN_EXPIRES_IN = "1d";
+const TOKEN_COOKIE_NAME = "token";
+
+const tokenCookieOptions = {
+  // Not httpOnly: the frontend reads it and sends it as "Authorization: Bearer ..."
+  httpOnly: false,
+  secure: false, // Set to true if we'll use HTTPS
+  sameSite: "lax" as const,
+  path: "/",
+  maxAge: 24 * 60 * 60 * 1000, // 1 day
+};
 
 export class UserController {
   // POST create new user
@@ -110,6 +120,7 @@ export class UserController {
       // safe user is the user without the password
       const { password_hash, ...safeUser } = user;
 
+      res.cookie(TOKEN_COOKIE_NAME, token, tokenCookieOptions);
       res.status(StatusCodes.OK).json({
         success: true,
         message: "Logged in successfully",
@@ -125,9 +136,14 @@ export class UserController {
     }
   }
 
-  // POST refreshToken returns new token
-  static async refreshToken(req: Request, res: Response): Promise<void> {}
-
-  // POST logoutUser
-  static async logoutUser(req: Request, res: Response): Promise<void> {}
+  // POST logoutUser clears the cookie
+  static async logoutUser(req: Request, res: Response): Promise<void> {
+    // Options must match the ones used when setting it, or the browser keeps it
+    const { maxAge, ...clearOptions } = tokenCookieOptions;
+    res.clearCookie(TOKEN_COOKIE_NAME, clearOptions);
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  }
 }

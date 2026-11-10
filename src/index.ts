@@ -3,6 +3,7 @@ import "dotenv/config";
 import userRouter from "./routers/userRoutes.ts";
 import cors from "cors";
 import http from "http";
+import cookieParser from 'cookie-parser';
 import { poolConnection } from "./db/db.ts";
 
 const app = express();
@@ -10,14 +11,15 @@ const app = express();
 // CORS
 const corsOptions = {
   origin: "http://localhost:5173",
+  credentials: true, // lets the browser accept the token cookie from cross-origin requests
   optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
-
 app.use(express.json());
+app.use(cookieParser());
 
-// Routes
+// API Routes
 app.use("/api/user", userRouter);
 
 const port = process.env.PORT || 3000;
