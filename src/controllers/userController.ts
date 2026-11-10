@@ -10,8 +10,7 @@ const TOKEN_EXPIRES_IN = "1d";
 const TOKEN_COOKIE_NAME = "token";
 
 const tokenCookieOptions = {
-  // Not httpOnly: the frontend reads it and sends it as "Authorization: Bearer ..."
-  httpOnly: false,
+  httpOnly: false, // Not httpOnly: the frontend reads it and sends it as "Authorization: Bearer ..."
   secure: false, // Set to true if we'll use HTTPS
   sameSite: "lax" as const,
   path: "/",

@@ -12,7 +12,7 @@ import { users } from "./users";
 export const userRoles = mssqlTable(
   "user_roles",
   {
-    userId: bigint("user_id", { mode: "number" })
+    user_id: bigint("user_id", { mode: "number" })
       .notNull()
       .references(() => users.user_id),
     roleCode: varchar("role_code", { length: 20 }).notNull(),
@@ -25,7 +25,7 @@ export const userRoles = mssqlTable(
   },
   (table) => [
     // Composite key (user + role) can only be declared at table level
-    primaryKey({ columns: [table.userId, table.roleCode] }),
+    primaryKey({ columns: [table.user_id, table.roleCode] }),
 
     check(
       "user_roles_role_code_check",
