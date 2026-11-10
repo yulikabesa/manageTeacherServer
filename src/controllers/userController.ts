@@ -5,6 +5,7 @@ import { users } from "../db/schemas/users";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { eq } from "drizzle-orm";
+import { UserService } from "../services/userService";
 
 const TOKEN_EXPIRES_IN = "1d";
 const TOKEN_COOKIE_NAME = "token";
@@ -22,13 +23,10 @@ export class UserController {
   static async createUser(req: Request, res: Response): Promise<void> {
     try {
       const userData = req.body;
-      // Hash password
-      const passwordHash = await bcrypt.hash(userData.password, 12);
-      const now = new Date();
 
-      await db.insert(users).values({
+      await UserService.createUser({
         username: userData.username,
-        password_hash: passwordHash,
+        password: userData.password,
         full_name: userData.full_name,
         personal_number: userData.personal_number,
         email: userData.email,
@@ -36,9 +34,7 @@ export class UserController {
         position_title: userData.position_title,
         rank: userData.rank,
         service_type: userData.service_type,
-        is_active: true,
-        created_at_utc: now,
-        updated_at_utc: now,
+        wants_teacher: userData.wants_teacher === true,
       });
 
       res.status(StatusCodes.CREATED).json({

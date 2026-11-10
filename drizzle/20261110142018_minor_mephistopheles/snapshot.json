@@ -1,0 +1,470 @@
+{
+  "version": "2",
+  "dialect": "mssql",
+  "id": "185ed736-f730-4f65-b102-d1fd35d47144",
+  "prevIds": [
+    "8d15ddf3-3c04-4c6e-a887-8db99b109c4d"
+  ],
+  "ddl": [
+    {
+      "schema": "dbo",
+      "name": "teacher_applications",
+      "entityType": "tables"
+    },
+    {
+      "schema": "dbo",
+      "name": "user_roles",
+      "entityType": "tables"
+    },
+    {
+      "schema": "dbo",
+      "name": "Users",
+      "entityType": "tables"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "application_id",
+      "type": "bigint",
+      "notNull": true,
+      "generated": null,
+      "identity": {
+        "seed": 1,
+        "increment": 1
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "user_id",
+      "type": "bigint",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "status",
+      "type": "varchar(20)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "requested_at_utc",
+      "type": "datetime2(0)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "reviewed_by",
+      "type": "bigint",
+      "notNull": false,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "reviewed_at_utc",
+      "type": "datetime2(0)",
+      "notNull": false,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "review_notes",
+      "type": "nvarchar(1000)",
+      "notNull": false,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "user_id",
+      "type": "bigint",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "role_code",
+      "type": "varchar(20)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "assigned_by",
+      "type": "bigint",
+      "notNull": false,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "assigned_at_utc",
+      "type": "datetime2(0)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "user_id",
+      "type": "bigint",
+      "notNull": true,
+      "generated": null,
+      "identity": {
+        "seed": 1,
+        "increment": 1
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "username",
+      "type": "nvarchar(80)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "password_hash",
+      "type": "varchar(255)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "full_name",
+      "type": "nvarchar(150)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "personal_number",
+      "type": "varchar(7)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "email",
+      "type": "varchar(254)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "phone",
+      "type": "varchar(25)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "position_title",
+      "type": "nvarchar(120)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "rank",
+      "type": "nvarchar(50)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "service_type",
+      "type": "varchar(20)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "is_active",
+      "type": "bit",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "created_at_utc",
+      "type": "datetime2(0)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "updated_at_utc",
+      "type": "datetime2(0)",
+      "notNull": true,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "user_roles_pkey",
+      "nameExplicit": false,
+      "columns": [
+        "user_id",
+        "role_code"
+      ],
+      "entityType": "pks"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "teacher_applications_pkey",
+      "nameExplicit": false,
+      "columns": [
+        "application_id"
+      ],
+      "entityType": "pks"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "Users_pkey",
+      "nameExplicit": false,
+      "columns": [
+        "user_id"
+      ],
+      "entityType": "pks"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "teacher_applications_user_id_Users_user_id_fk",
+      "columns": [
+        "user_id"
+      ],
+      "nameExplicit": false,
+      "schemaTo": "dbo",
+      "tableTo": "Users",
+      "columnsTo": [
+        "user_id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "teacher_applications_reviewed_by_Users_user_id_fk",
+      "columns": [
+        "reviewed_by"
+      ],
+      "nameExplicit": false,
+      "schemaTo": "dbo",
+      "tableTo": "Users",
+      "columnsTo": [
+        "user_id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "user_roles_user_id_Users_user_id_fk",
+      "columns": [
+        "user_id"
+      ],
+      "nameExplicit": false,
+      "schemaTo": "dbo",
+      "tableTo": "Users",
+      "columnsTo": [
+        "user_id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "user_roles_assigned_by_Users_user_id_fk",
+      "columns": [
+        "assigned_by"
+      ],
+      "nameExplicit": false,
+      "schemaTo": "dbo",
+      "tableTo": "Users",
+      "columnsTo": [
+        "user_id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "teacher_applications_user_id_key",
+      "nameExplicit": false,
+      "columns": [
+        "user_id"
+      ],
+      "entityType": "uniques"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "Users_username_key",
+      "nameExplicit": false,
+      "columns": [
+        "username"
+      ],
+      "entityType": "uniques"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "Users_personal_number_key",
+      "nameExplicit": false,
+      "columns": [
+        "personal_number"
+      ],
+      "entityType": "uniques"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "teacher_applications_status_check",
+      "value": "[teacher_applications].[status] IN ('PENDING', 'APPROVED', 'REJECTED')",
+      "entityType": "checks"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "teacher_applications_review_check",
+      "value": "\n        (\n          [teacher_applications].[status] = 'PENDING'\n          AND [teacher_applications].[reviewed_by] IS NULL\n          AND [teacher_applications].[reviewed_at_utc] IS NULL\n        )\n        OR\n        (\n          [teacher_applications].[status] IN ('APPROVED', 'REJECTED')\n          AND [teacher_applications].[reviewed_by] IS NOT NULL\n          AND [teacher_applications].[reviewed_at_utc] IS NOT NULL\n        )\n      ",
+      "entityType": "checks"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "user_roles_role_code_check",
+      "value": "[user_roles].[role_code] IN ('STAFF', 'TEACHER', 'COMMANDER', 'SYSTEM_ADMIN')",
+      "entityType": "checks"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "users_service_type_check",
+      "value": "[Users].[service_type] IN ('Mandatory', 'Career')",
+      "entityType": "checks"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "users_phone_check",
+      "value": "[Users].[phone] NOT LIKE '%[^0-9]%'\n          AND LEN([Users].[phone]) = 10",
+      "entityType": "checks"
+    },
+    {
+      "schema": "dbo",
+      "table": "Users",
+      "name": "users_email_check",
+      "value": "[Users].[email] LIKE '%_@_%._%'",
+      "entityType": "checks"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "teacher_applications_status_default",
+      "column": "status",
+      "nameExplicit": false,
+      "default": "('PENDING')",
+      "entityType": "defaults"
+    },
+    {
+      "schema": "dbo",
+      "table": "teacher_applications",
+      "name": "teacher_applications_requested_at_utc_default",
+      "column": "requested_at_utc",
+      "nameExplicit": false,
+      "default": "(SYSUTCDATETIME())",
+      "entityType": "defaults"
+    },
+    {
+      "schema": "dbo",
+      "table": "user_roles",
+      "name": "user_roles_assigned_at_utc_default",
+      "column": "assigned_at_utc",
+      "nameExplicit": false,
+      "default": "(SYSUTCDATETIME())",
+      "entityType": "defaults"
+    }
+  ],
+  "renames": []
+}
