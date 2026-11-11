@@ -141,4 +141,28 @@ export class UserController {
       message: "Logged out successfully",
     });
   }
+
+  // GET the logged in user
+  // TODO
+  static async getUser(req: Request, res: Response): Promise<void> {}
+
+  // GET users
+  // TODO
+  static async searchUsers(req: Request, res: Response): Promise<void> {}
+
+  // GET user by user id
+  // TODO
+  static async getUserById(req: Request, res: Response): Promise<void> {}
+
+  // UPDATE the user's password
+  // TODO
+  static async updateUserPassword(req: Request, res: Response): Promise<void> {}
+
+  // UPDATE user's details
+  // TODO
+  static async updateUser(req: Request, res: Response): Promise<void> {}
+
+  // PUT make a user a commander
+  // TODO
+  static async createCommander(req: Request, res: Response): Promise<void> {}
 }

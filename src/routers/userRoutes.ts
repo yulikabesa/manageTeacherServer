@@ -13,22 +13,38 @@ router.post("/register", UserController.createUser);
 
 router.post("/login", UserController.loginUser);
 
-
 // logout
 // POST logout user
 
-router.post("/logout", UserController.logoutUser);
+router.post("/logout", auth, UserController.logoutUser);
 
-// // Get user
+// Get user
 
-// router.get("/search", auth, UserController.searchUsers);
+router.get("/me", auth, UserController.getUser);
 
-// // GET user by ID
+// Get users
+// only commander and System Admin can use it
+// TODO: commander middleware
 
-// // router.get("/:id", auth, UserController.getUserById);
+router.get("/useres", auth, UserController.searchUsers);
 
-// // UPDATE user
+// GET user by ID
 
-// // router.patch("/update/:id", auth, UserController.updateUser);
+router.get("/:userId", auth, UserController.getUserById);
+
+// UPDATE user password
+
+router.patch("/password", auth, UserController.updateUserPassword);
+
+// UPDATE user details by id
+// עצמי לשדות מוגבלים / מפקד
+
+router.patch("/:userId", auth, UserController.updateUser);
+
+// making user a commander
+// PUT
+// must be System Admin
+
+router.put("/:userId/roles", auth, UserController.createCommander);
 
 export default router;
