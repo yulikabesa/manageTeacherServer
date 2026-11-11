@@ -25,8 +25,9 @@ router.get("/me", auth, UserController.getUser);
 // Get users
 // only commander and System Admin can use it
 // TODO: commander middleware
+// GET /api/users/search?q=yael
 
-router.get("/useres", auth, UserController.searchUsers);
+router.get("/search", auth, UserController.searchUsers);
 
 // GET user by ID
 

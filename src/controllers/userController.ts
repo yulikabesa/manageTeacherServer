@@ -4,11 +4,12 @@ import { db } from "../db/db";
 import { users } from "../db/schemas/users";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { eq } from "drizzle-orm";
+import { eq, like, or } from "drizzle-orm";
 import { UserService } from "../services/userService";
 
 const TOKEN_EXPIRES_IN = "1d";
 const TOKEN_COOKIE_NAME = "token";
+const GET_LIMIT = 20;
 
 const tokenCookieOptions = {
   httpOnly: false, // Not httpOnly: the frontend reads it and sends it as "Authorization: Bearer ..."
@@ -143,12 +144,55 @@ export class UserController {
   }
 
   // GET the logged in user
-  // TODO
-  static async getUser(req: Request, res: Response): Promise<void> {}
+  // The auth middleware already loaded a fresh copy from the DB (without the password hash)
+  static async getUser(req: Request, res: Response): Promise<void> {
+    res.status(StatusCodes.OK).json({ success: true, user: req.user });
+  }
 
   // GET users
-  // TODO
-  static async searchUsers(req: Request, res: Response): Promise<void> {}
+  static async searchUsers(req: Request, res: Response): Promise<void> {
+    try {
+      const query = typeof req.query.q === "string" ? req.query.q.trim() : "";
+
+      // Return empty array or all users (paginated) if no search term is provided
+      if (!query) {
+        res.status(StatusCodes.OK).json({
+          success: true,
+          users: [],
+          message: "no term was provided",
+        });
+        return;
+      }
+
+      const searchPattern = `%${query}%`;
+
+      const matchedUsers = await db
+        .select({
+          id: users.user_id,
+          username: users.username,
+          email: users.email,
+        })
+        .from(users)
+        .where(
+          or(
+            like(users.username, searchPattern),
+            like(users.email, searchPattern),
+          ),
+        )
+        .orderBy(users.username)
+        .offset(0)
+        .fetch(GET_LIMIT);
+
+      res.json(matchedUsers);
+    } catch (error) {
+      console.error("Error searching users:", error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        error: "Internal server error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
 
   // GET user by user id
   // TODO
